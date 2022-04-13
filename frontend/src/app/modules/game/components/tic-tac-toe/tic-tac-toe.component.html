@@ -1,15 +1,24 @@
-<div class="vh-100 d-flex justify-content-center align-items-center">
-  <table>
-    <tr *ngFor="let ticTacToeRow of ticTacToe$ | async; let rowIndex = index">
-      <td
-        *ngFor="let ticTacToeCell of ticTacToeRow; let cellIndex = index"
-        [class.selectable]="!ticTacToeCell"
-        (click)="!ticTacToeCell && onCellClick(rowIndex, cellIndex)"
-      >
-        <div class="play-container">{{ ticTacToeCell }}</div>
-      </td>
-    </tr>
-  </table>
+<div
+  class="screen-height d-flex flex-column justify-content-center align-items-center"
+>
+  <app-score></app-score>
+  <div *ngIf="game$ | async as game">
+    <div
+      class="result result-{{ game.finishMode }} lose"
+      *ngIf="game.isFinished"
+    ></div>
+    <table>
+      <tr *ngFor="let ticTacToeRow of game.ticTacToe; let rowIndex = index">
+        <td
+          *ngFor="let ticTacToeCell of ticTacToeRow; let cellIndex = index"
+          [class.selectable]="canSelect(rowIndex, cellIndex) | async"
+          (click)="onCellClick(rowIndex, cellIndex)"
+        >
+          <div class="play-container">{{ ticTacToeCell }}</div>
+        </td>
+      </tr>
+    </table>
+  </div>
 </div>
 
 <app-current-time></app-current-time>

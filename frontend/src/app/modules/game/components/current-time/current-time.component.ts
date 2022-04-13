@@ -4,7 +4,7 @@ import {
   ChangeDetectionStrategy,
   Input,
 } from '@angular/core';
-import { PlayerType } from '../../enums/PlayerType';
+import { pluck } from 'rxjs';
 import { TicTacToeService } from '../../services/tic-tac-toe';
 
 @Component({
@@ -14,7 +14,7 @@ import { TicTacToeService } from '../../services/tic-tac-toe';
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class CurrentTimeComponent implements OnInit {
-  currentPlayer$ = this.ticTacToeService.currentPlayer$;
+  currentPlayer$ = this.ticTacToeService.game$.pipe(pluck('currentPlayer'));
 
   constructor(private ticTacToeService: TicTacToeService) {}
 

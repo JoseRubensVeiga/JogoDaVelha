@@ -1,4 +1,6 @@
 import { Component, OnInit } from '@angular/core';
+import { ActivatedRoute } from '@angular/router';
+import { map, Observable } from 'rxjs';
 import { TicTacToeService } from '../../services/tic-tac-toe';
 
 @Component({
@@ -7,13 +9,39 @@ import { TicTacToeService } from '../../services/tic-tac-toe';
   styleUrls: ['./tic-tac-toe.component.scss'],
 })
 export class TicTacToeComponent implements OnInit {
-  ticTacToe$ = this.ticTacToeService.ticTacToe$;
+  game$ = this.ticTacToeService.game$;
 
-  constructor(private ticTacToeService: TicTacToeService) {}
+  constructor(
+    private ticTacToeService: TicTacToeService,
+    private activatedRoute: ActivatedRoute
+  ) {}
 
-  ngOnInit(): void {}
+  ngOnInit(): void {
+    this.loadParams();
+  }
 
   onCellClick(rowIndex: number, cellIndex: number): void {
-    this.ticTacToeService.selectCell(rowIndex, cellIndex);
+    this.ticTacToeService.set(rowIndex, cellIndex);
+  }
+
+  canSelect(rowIndex: number, cellIndex: number): Observable<boolean> {
+    return this.game$.pipe(
+      map((game) => {
+        const playerType =
+          game.xPlayerName === this.ticTacToeService.userName ? 'X' : 'O';
+
+        if (game.currentPlayer === playerType) {
+          return !game.ticTacToe[rowIndex][cellIndex];
+        }
+
+        return false;
+      })
+    );
+  }
+
+  private loadParams(): void {
+    this.activatedRoute.queryParams.subscribe((params: any) => {
+      this.ticTacToeService.setName(params.name);
+    });
   }
 }

@@ -1,50 +1,37 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable } from 'rxjs';
-import { PlayerType } from '../../enums/PlayerType';
-import { TicTacToe } from '../../models/TicTacToe';
+import { Observable, ReplaySubject } from 'rxjs';
+import { webSocket } from 'rxjs/webSocket';
+import { Game } from '../../models/Game';
 
 @Injectable({
   providedIn: 'root',
 })
 export class TicTacToeService {
-  private _ticTacToe$ = new BehaviorSubject<TicTacToe>([
-    [null, null, null],
-    [null, null, null],
-    [null, null, null],
-  ]);
+  private _game$ = new ReplaySubject<Game>(1);
 
-  get ticTacToe$(): Observable<TicTacToe> {
-    return this._ticTacToe$.asObservable();
+  get game$(): Observable<Game> {
+    return this._game$.asObservable();
   }
 
-  private _currentPlayer$ = new BehaviorSubject<PlayerType>('X');
+  subject$ = webSocket('ws://localhost:3000/connection');
 
-  get currentPlayer$(): Observable<PlayerType> {
-    return this._currentPlayer$.asObservable();
+  userName!: string;
+
+  constructor() {
+    this.subject$.subscribe((game: any) => this._game$.next(game));
+    this.subject$.subscribe(console.log);
   }
 
-  constructor() {}
-
-  selectCell(rowIndex: number, cellIndex: number): void {
-    const value = this._ticTacToe$.getValue();
-
-    value[rowIndex][cellIndex] = this._currentPlayer$.getValue();
-
-    this._ticTacToe$.next(value);
-    this.toggleCurrentPlayer();
+  get(): Observable<any> {
+    return this.subject$;
   }
 
-  private clearCells(): void {
-    this._ticTacToe$.next([
-      [null, null, null],
-      [null, null, null],
-      [null, null, null],
-    ]);
+  set(row: number, cell: number): void {
+    this.subject$.next({ row, cell });
   }
 
-  private toggleCurrentPlayer(): void {
-    const value = this._currentPlayer$.getValue();
-
-    this._currentPlayer$.next(value === 'O' ? 'X' : 'O');
+  setName(player: string): void {
+    this.userName = player;
+    this.subject$.next({ player });
   }
 }

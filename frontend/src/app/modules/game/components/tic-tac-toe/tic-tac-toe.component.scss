@@ -22,6 +22,10 @@ table {
                 font-weight: 700;
             }
 
+            &:not(.selectable) {
+                pointer-events: none;
+            }
+
             &.selectable {
                 cursor: pointer;
 
@@ -38,5 +42,66 @@ table {
                 border-right: none;
             }
         }
+    }
+}
+
+.result {
+    &.win {
+        background-color: green;
+    }
+
+    &.lose {
+        background-color: red;
+    }
+    position: absolute;
+
+    &.result-0,
+    &.result-1,
+    &.result-2,
+    &.result-6,
+    &.result-7 {
+        height: 600px;
+        width: 10px;
+    }
+
+    &.result-0 {
+        margin-left: 100px;
+    }
+
+    &.result-1 {
+        margin-left: 300px;
+    }
+
+    &.result-2 {
+        margin-left: 500px;
+    }
+
+    &.result-3,
+    &.result-4,
+    &.result-5 {
+        width: 600px;
+        height: 10px;
+    }
+
+    &.result-3 {
+        margin-top: 100px;
+    }
+
+    &.result-4 {
+        margin-top: 300px;
+    }
+
+    &.result-5 {
+        margin-top: 500px;
+    }
+
+    &.result-6 {
+        transform: rotate(135deg);
+        margin-left: 300px;
+    }
+
+    &.result-7 {
+        transform: rotate(225deg);
+        margin-left: 300px;
     }
 }

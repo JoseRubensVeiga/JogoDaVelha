@@ -1,0 +1,10 @@
+<div class="score-container" *ngIf="game$ | async as game">
+    <div class="player-1">
+        <p>{{ game.xPlayerName }}</p>
+        {{ game.score.xPlayer }}
+      </div>
+      <div class="player-2">
+          <p>{{ game.oPlayerName }}</p>
+          {{ game.score.oPlayer }}
+        </div>
+</div>

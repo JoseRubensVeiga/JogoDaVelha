@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { FormControl } from '@angular/forms';
+import { Router } from '@angular/router';
+import { TicTacToeService } from '../../services/tic-tac-toe';
 
 @Component({
   selector: 'app-sign-in',
@@ -13,11 +15,15 @@ export class SignInComponent implements OnInit {
     return !!this.control.value;
   }
 
-  constructor() {}
+  constructor(private router: Router) {}
 
   ngOnInit(): void {}
 
   onSubmit(): void {
-    console.log(this.control.value);
+    this.router.navigate(['game', 'play'], {
+      queryParams: {
+        name: this.control.value,
+      },
+    });
   }
 }
