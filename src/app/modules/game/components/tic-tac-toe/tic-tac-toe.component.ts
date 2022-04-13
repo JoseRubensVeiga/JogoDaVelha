@@ -24,6 +24,10 @@ export class TicTacToeComponent implements OnInit {
     this.ticTacToeService.set(rowIndex, cellIndex);
   }
 
+  restart(): void {
+    this.ticTacToeService.restart();
+  }
+
   canSelect(rowIndex: number, cellIndex: number): Observable<boolean> {
     return this.game$.pipe(
       map((game) => {
@@ -41,7 +45,7 @@ export class TicTacToeComponent implements OnInit {
 
   private loadParams(): void {
     this.activatedRoute.queryParams.subscribe((params: any) => {
-      this.ticTacToeService.setName(params.name);
+      this.ticTacToeService.setName(params.name, params.player);
     });
   }
 }

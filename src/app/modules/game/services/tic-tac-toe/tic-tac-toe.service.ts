@@ -13,9 +13,11 @@ export class TicTacToeService {
     return this._game$.asObservable();
   }
 
-  subject$ = webSocket('ws://immense-sea-50163.herokuapp.com/connection');
+  subject$ = webSocket('wss://immense-sea-50163.herokuapp.com/connection');
+  // subject$ = webSocket('ws://localhost:5000/connection');
 
   userName!: string;
+  player!: 1 | 0;
 
   constructor() {
     this.subject$.subscribe((game: any) => this._game$.next(game));
@@ -27,11 +29,16 @@ export class TicTacToeService {
   }
 
   set(row: number, cell: number): void {
-    this.subject$.next({ row, cell });
+    this.subject$.next({ row, cell, player: this.player });
   }
 
-  setName(player: string): void {
-    this.userName = player;
-    this.subject$.next({ player });
+  setName(playerName: string, player: 1 | 0): void {
+    this.userName = playerName;
+    this.player = player;
+    this.subject$.next({ playerName, player });
+  }
+
+  restart(): void {
+    this.subject$.next({ action: 'restart' });
   }
 }

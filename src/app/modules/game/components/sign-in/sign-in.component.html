@@ -11,9 +11,33 @@
         placeholder="ex: Jose"
         [formControl]="control"
       />
+
       <button class="btn btn-success ms-3" [disabled]="!hasValue">
         Começar
       </button>
     </form>
+
+    <div class="btn-group mt-3" role="group">
+      <input
+        type="radio"
+        class="btn-check"
+        id="btnradio1"
+        name="player"
+        (click)="player = 1"
+        autocomplete="off"
+        checked
+      />
+      <label class="btn btn-outline-primary" for="btnradio1">Player 1</label>
+
+      <input
+        type="radio"
+        class="btn-check"
+        id="btnradio2"
+        name="player"
+        autocomplete="off"
+        (click)="player = 2"
+      />
+      <label class="btn btn-outline-primary" for="btnradio2">Player 2</label>
+    </div>
   </div>
 </div>

@@ -11,6 +11,8 @@ import { TicTacToeService } from '../../services/tic-tac-toe';
 export class SignInComponent implements OnInit {
   control = new FormControl();
 
+  player: 1 | 2 = 1;
+
   get hasValue(): boolean {
     return !!this.control.value;
   }
@@ -23,6 +25,7 @@ export class SignInComponent implements OnInit {
     this.router.navigate(['game', 'play'], {
       queryParams: {
         name: this.control.value,
+        player: this.player,
       },
     });
   }
