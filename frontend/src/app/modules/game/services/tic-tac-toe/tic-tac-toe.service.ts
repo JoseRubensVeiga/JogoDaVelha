@@ -13,7 +13,7 @@ export class TicTacToeService {
     return this._game$.asObservable();
   }
 
-  subject$ = webSocket('ws://localhost:3000/connection');
+  subject$ = webSocket('ws://immense-sea-50163.herokuapp.com/connection');
 
   userName!: string;
 
