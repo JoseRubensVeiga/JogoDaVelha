@@ -1,0 +1,42 @@
+table {
+    tr {
+        &:first-child td {
+            border-top: none;
+        }
+
+        &:last-child td {
+            border-bottom: none;
+        }
+
+        td {
+            border: 3px solid rgba(128, 128, 128, 0.452);
+            height: 200px;
+            width: 200px;
+
+            .play-container {
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                font-size: 100px;
+                user-select: none;
+                font-weight: 700;
+            }
+
+            &.selectable {
+                cursor: pointer;
+
+                &:hover {
+                    background-color: #ebebeb;
+                }
+            }
+
+            &:first-child {
+                border-left: none;
+            }
+
+            &:last-child {
+                border-right: none;
+            }
+        }
+    }
+}

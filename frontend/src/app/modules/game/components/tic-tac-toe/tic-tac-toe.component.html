@@ -1,0 +1,15 @@
+<div class="vh-100 d-flex justify-content-center align-items-center">
+  <table>
+    <tr *ngFor="let ticTacToeRow of ticTacToe$ | async; let rowIndex = index">
+      <td
+        *ngFor="let ticTacToeCell of ticTacToeRow; let cellIndex = index"
+        [class.selectable]="!ticTacToeCell"
+        (click)="!ticTacToeCell && onCellClick(rowIndex, cellIndex)"
+      >
+        <div class="play-container">{{ ticTacToeCell }}</div>
+      </td>
+    </tr>
+  </table>
+</div>
+
+<app-current-time></app-current-time>

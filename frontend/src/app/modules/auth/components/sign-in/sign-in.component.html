@@ -1,0 +1,19 @@
+<div
+  class="d-flex justify-content-center align-items-center flex-column vh-100"
+>
+  <div class="card p-5">
+    <h4 class="text-center display-4">Entre com seu nome para iniciar</h4>
+
+    <form class="send-container" (ngSubmit)="onSubmit()">
+      <input
+        type="text"
+        class="form-control w-100"
+        placeholder="ex: Jose"
+        [formControl]="control"
+      />
+      <button class="btn btn-success ms-3" [disabled]="!hasValue">
+        Começar
+      </button>
+    </form>
+  </div>
+</div>
